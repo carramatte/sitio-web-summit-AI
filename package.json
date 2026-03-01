@@ -1,0 +1,11 @@
+{
+  "name": "summit-ai-app",
+  "version": "1.0.0",
+  "description": "Summit AI Landing Page",
+  "scripts": {
+    "start": "serve ."
+  },
+  "dependencies": {
+    "serve": "^14.2.1"
+  }
+}
