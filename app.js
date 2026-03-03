@@ -313,3 +313,99 @@ const initThreeJS = () => {
 };
 
 initThreeJS();
+
+
+// ==========================================
+// 5. LANYARD EMULATION (Vanilla GSAP Physics)
+// ==========================================
+const lanyardCard = document.getElementById('lanyard-card');
+const lanyardString = document.getElementById('lanyard-string');
+const lanyardWrapper = document.getElementById('lanyard-wrapper');
+
+if (lanyardWrapper && lanyardCard && lanyardString) {
+    let isDown = false;
+    let startX = 0;
+    let startY = 0;
+
+    // Smooth magnetic follow when hovering near it
+    window.addEventListener('mousemove', (e) => {
+        if (isDown) return;
+        const rect = lanyardWrapper.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+
+        // Only react slightly if we are reasonably close to it
+        if (e.clientY > rect.bottom + 200) return;
+
+        const dx = e.clientX - centerX;
+
+        // Slight rotation based on mouse pos overall
+        gsap.to(lanyardCard, {
+            rotationZ: dx * 0.03,
+            rotationY: dx * 0.05,
+            rotationX: (e.clientY - rect.top) * -0.02,
+            duration: 1.5,
+            ease: "power2.out"
+        });
+        gsap.to(lanyardString, {
+            rotationZ: dx * 0.02,
+            duration: 1.5,
+            ease: "power2.out"
+        });
+    });
+
+    // Start Drag
+    lanyardCard.addEventListener('mousedown', (e) => {
+        isDown = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        gsap.killTweensOf(lanyardCard);
+        gsap.killTweensOf(lanyardString);
+        lanyardCard.style.cursor = 'grabbing';
+    });
+
+    // Dragging physics
+    window.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+
+        // Restrict massive pulls
+        const dx = Math.min(Math.max(e.clientX - startX, -150), 150);
+        const dy = Math.min(Math.max(e.clientY - startY, -50), 100);
+
+        // Draggable string and card
+        gsap.set(lanyardCard, {
+            x: dx * 0.8,
+            y: dy * 0.8,
+            rotationZ: dx * 0.3, // Swing angle
+            rotationY: dx * 0.25,
+            rotationX: dy * -0.2
+        });
+
+        gsap.set(lanyardString, {
+            rotationZ: dx * 0.15, // String swings half the amount
+        });
+    });
+
+    // Release and Snap back (Elastic Physics)
+    window.addEventListener('mouseup', () => {
+        if (!isDown) return;
+        isDown = false;
+        lanyardCard.style.cursor = 'grab';
+
+        // Elastic snap back
+        gsap.to(lanyardCard, {
+            x: 0,
+            y: 0,
+            rotationZ: 0,
+            rotationY: 0,
+            rotationX: 0,
+            duration: 2.5,
+            ease: "elastic.out(1, 0.3)"
+        });
+
+        gsap.to(lanyardString, {
+            rotationZ: 0,
+            duration: 2.5,
+            ease: "elastic.out(1, 0.3)"
+        });
+    });
+}
