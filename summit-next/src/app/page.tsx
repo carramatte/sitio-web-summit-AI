@@ -1,47 +1,35 @@
-import HeroScene from '@/components/HeroScene';
-import Lanyard from '@/components/Lanyard';
+'use client';
+import dynamic from 'next/dynamic';
 import LightPillar from '@/components/LightPillar';
-import LogoLoop from '@/components/LogoLoop';
 import GlitchText from '@/components/GlitchText';
+import LogoLoop from '@/components/LogoLoop';
+import CardSwap, { Card } from '@/components/CardSwap';
+
+const RotatingCube = dynamic(() => import('@/components/RotatingCube'), {
+  ssr: false,
+  loading: () => <div className="cube-canvas" />,
+});
+
+const logos = [
+  { src: '/react-logo.svg', alt: 'React', width: 100, height: 100 },
+  { src: '/nextjs-logo.svg', alt: 'Next.js', width: 100, height: 100 },
+  { src: '/python-logo.svg', alt: 'Python', width: 100, height: 100 },
+  { src: '/openai-logo.svg', alt: 'OpenAI', width: 100, height: 100 },
+  { src: '/react-logo.svg', alt: 'React', width: 100, height: 100 },
+  { src: '/nextjs-logo.svg', alt: 'Next.js', width: 100, height: 100 },
+  { src: '/python-logo.svg', alt: 'Python', width: 100, height: 100 },
+  { src: '/openai-logo.svg', alt: 'OpenAI', width: 100, height: 100 },
+];
 
 export default function Home() {
-  const logos = [
-    { src: '/lanyard.png', alt: 'Summit AI Partner', width: 100, height: 100 },
-    { src: '/lanyard.png', alt: 'Summit AI Tech', width: 100, height: 100 },
-    { src: '/lanyard.png', alt: 'Future Tech', width: 100, height: 100 },
-    { src: '/lanyard.png', alt: 'Visionary', width: 100, height: 100 },
-    { src: '/lanyard.png', alt: 'Autonomous', width: 100, height: 100 },
-  ];
-
   return (
-    <main className="min-h-screen bg-[#060010] text-[#F0F0F0] overflow-x-hidden">
-
-      {/* 1. Hero Section con 3D Scene y Lanyard */}
-      <section className="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden bg-[#0D1B2A]">
-        {/* React Three Fiber Scene */}
-        <HeroScene />
-
-        {/* Capa de Lanyard Flotante en centro */}
-        <div className="absolute inset-0 z-10 pointer-events-none flex flex-col items-center justify-center mt-20">
-          <Lanyard />
-        </div>
-
-        {/* Texto Hero Arriba */}
-        <div className="absolute z-20 top-24 text-center pointer-events-none">
-          <GlitchText speed={0.8} enableShadows className="text-5xl md:text-8xl">
-            SUMMIT AI
-          </GlitchText>
-          <p className="mt-4 text-[#C45E1A] tracking-widest uppercase font-bold text-sm md:text-xl">El Futuro es Autónomo</p>
-        </div>
-
-        {/* Gradiente de transición inferior */}
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#0D1B2A] to-transparent z-10 pointer-events-none"></div>
-      </section>
-
-      {/* 2. Sección Secundaria con Light Pillar */}
-      <section className="relative w-full min-h-screen py-24 px-8 overflow-hidden bg-[#0D1B2A]">
-        {/* Background Light Pillar */}
-        <div className="absolute inset-0 z-0 opacity-80 mix-blend-screen pointer-events-none">
+    <main>
+      {/* ═══════════════════════════════════════════
+          SECCIÓN 1 — Hero / Landing
+          ═══════════════════════════════════════════ */}
+      <section id="inicio" className="section-full flex items-center justify-center" style={{ background: '#0D1B2A' }}>
+        {/* LightPillar Background */}
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
           <LightPillar
             topColor="#1B2E45"
             bottomColor="#C45E1A"
@@ -52,35 +40,157 @@ export default function Home() {
           />
         </div>
 
-        {/* Contenido sobre el Light Pillar */}
-        <div className="relative z-10 max-w-5xl mx-auto flex flex-col gap-20 items-center">
-          <div className="text-center w-full">
-            <GlitchText speed={1.2} enableOnHover enableShadows={false} className="text-3xl md:text-5xl border-b border-[#C45E1A]/30 pb-4 inline-block">
-              Nuestros Partners
-            </GlitchText>
+        {/* Hero Content */}
+        <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
+          <GlitchText speed={40} enableShadows={true} enableOnHover={false} className="text-[clamp(3rem,10vw,9rem)] font-black">
+            SUMMIT AI
+          </GlitchText>
 
-            <div className="mt-16 w-full opacity-80 filter grayscale hover:grayscale-0 transition-all duration-700">
-              <LogoLoop
-                logos={logos}
-                speed={150}
-                direction="left"
-                pauseOnHover
-                logoHeight={60}
-                gap={80}
-              />
+          <p style={{
+            color: '#8A9BB0',
+            fontSize: 'clamp(0.85rem, 2vw, 1.1rem)',
+            letterSpacing: '0.35em',
+            textTransform: 'uppercase',
+            fontWeight: 400,
+          }}>
+            Software · Automatizaciones · Inteligencia Artificial
+          </p>
+
+          <a href="#servicios" className="cta-button" style={{ marginTop: '1rem' }}>
+            Conocé lo que hacemos
+          </a>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          SECCIÓN 2 — Tecnologías (Logo Loop)
+          ═══════════════════════════════════════════ */}
+      <section id="tecnologias" className="section-full flex flex-col items-center justify-center" style={{ background: '#0D1B2A' }}>
+        <div className="orange-line-top" />
+
+        <div style={{ textAlign: 'center', width: '100%', maxWidth: '1200px', padding: '0 2rem' }}>
+          <p className="section-label">Tecnologías que usamos</p>
+
+          <div style={{ width: '100%', opacity: 0.85, filter: 'grayscale(100%) brightness(2)' }}>
+            <LogoLoop
+              logos={logos}
+              speed={150}
+              direction="left"
+              pauseOnHover
+              logoHeight={50}
+              gap={100}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          SECCIÓN 3 — Servicios (Card Swap)
+          ═══════════════════════════════════════════ */}
+      <section id="servicios" className="section-full flex flex-col items-center justify-center" style={{ background: 'linear-gradient(180deg, #0D1B2A 0%, #112236 100%)' }}>
+        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+          <GlitchText speed={0.8} enableShadows={false} enableOnHover={true} className="text-[clamp(2rem,5vw,4rem)] font-black">
+            LO QUE HACEMOS
+          </GlitchText>
+        </div>
+
+        <div style={{ position: 'relative', width: '100%', maxWidth: '600px', height: '450px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <CardSwap
+            width={340}
+            height={380}
+            cardDistance={50}
+            verticalDistance={55}
+            delay={4000}
+            pauseOnHover={true}
+            skewAmount={4}
+            easing="elastic"
+          >
+            <Card>
+              <div className="service-card" style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <div className="icon">⚡</div>
+                <h3>Automatizaciones</h3>
+                <p>Optimizamos tus procesos con flujos automáticos que ahorran tiempo y reducen errores.</p>
+              </div>
+            </Card>
+            <Card>
+              <div className="service-card" style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <div className="icon">{'</>'}</div>
+                <h3>Desarrollo Web</h3>
+                <p>Creamos sitios y aplicaciones web modernas, rápidas y escalables a medida.</p>
+              </div>
+            </Card>
+            <Card>
+              <div className="service-card" style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <div className="icon">🧠</div>
+                <h3>Inteligencia Artificial</h3>
+                <p>Integramos soluciones de IA que potencian tu negocio con datos y automatización inteligente.</p>
+              </div>
+            </Card>
+          </CardSwap>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          SECCIÓN 4 — Sobre Nosotros
+          ═══════════════════════════════════════════ */}
+      <section id="nosotros" className="section-full flex items-center justify-center" style={{ background: '#0D1B2A' }}>
+        <div className="about-grid">
+          {/* Text Column */}
+          <div>
+            <h2 style={{
+              fontSize: 'clamp(2rem, 4vw, 3.5rem)',
+              fontWeight: 800,
+              color: '#F0F0F0',
+              marginBottom: '1.5rem',
+              lineHeight: 1.1,
+            }}>
+              QUIÉNES SOMOS
+            </h2>
+            <div className="about-text-block">
+              <p style={{
+                color: '#8A9BB0',
+                fontSize: '1.05rem',
+                lineHeight: 1.8,
+              }}>
+                En Summit AI combinamos tecnología de punta con visión estratégica para llevar tu negocio al siguiente nivel. Somos especialistas en desarrollo web, automatizaciones e inteligencia artificial.
+              </p>
             </div>
           </div>
 
-          <div className="bg-[#112236]/80 backdrop-blur-xl p-12 rounded-3xl border border-[#1B2E45] shadow-2xl mt-10 text-center max-w-3xl">
-            <h2 className="text-[#F0F0F0] text-3xl font-bold mb-6">Transformación Digital</h2>
-            <p className="text-gray-300 leading-relaxed text-lg mb-8">
-              Desbloqueamos el máximo potencial de la Inteligencia Artificial para escalar operaciones, reducir fricción y liderar la vanguardia tecnológica mundial. Nuestra metodología aplica agentes de última generación integrados a los procesos más profundos de tu empresa.
-            </p>
-            <button className="bg-[#C45E1A] text-white px-8 py-4 font-bold tracking-widest uppercase hover:bg-white hover:text-black transition-colors rounded-sm shadow-[0_0_20px_rgba(196,94,26,0.5)] hover:shadow-white">
-              Agendar Demostración
-            </button>
+          {/* 3D Cube Column */}
+          <div>
+            <RotatingCube />
           </div>
         </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          SECCIÓN 5 — Contacto
+          ═══════════════════════════════════════════ */}
+      <section id="contacto" className="section-full flex flex-col items-center justify-center" style={{ background: '#112236' }}>
+        <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
+          <GlitchText speed={0.8} enableShadows={false} enableOnHover={true} className="text-[clamp(2rem,5vw,4rem)] font-black">
+            HABLEMOS
+          </GlitchText>
+        </div>
+
+        <p style={{
+          color: '#8A9BB0',
+          fontSize: '1rem',
+          marginBottom: '2.5rem',
+          textAlign: 'center',
+        }}>
+          ¿Tenés un proyecto en mente? Escribinos.
+        </p>
+
+        <form className="contact-form" onSubmit={(e) => e.preventDefault()}>
+          <input type="text" placeholder="Nombre" required id="contact-name" />
+          <input type="email" placeholder="Email" required id="contact-email" />
+          <textarea placeholder="Mensaje" required id="contact-message" />
+          <button type="submit" className="submit-button">
+            ENVIAR
+          </button>
+        </form>
       </section>
     </main>
   );
