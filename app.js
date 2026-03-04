@@ -42,61 +42,41 @@ if (window.innerWidth >= 768) {
 }
 
 // ==========================================
-// 2. PRELOADER & INTRO ANIMATION
+// 2. INTRO ANIMATION (Tesla Style)
 // ==========================================
 const preloaderTL = gsap.timeline();
 
-// Simulate loading progress
-let progress = { value: 0 };
-preloaderTL.to(progress, {
-    value: 100,
-    duration: 2,
-    ease: "power1.inOut",
-    onUpdate: () => {
-        document.getElementById('preloader-text').innerText = `${Math.round(progress.value)}%`;
-        gsap.set('#preloader-bar', { width: `${progress.value}%` });
-    }
-})
-    .to('#preloader-logo', {
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-        ease: "power3.out"
-    }, "-=1")
-    .to('#preloader', {
-        yPercent: -100,
-        duration: 1,
-        ease: "power4.inOut",
-        delay: 0.5,
-        onComplete: () => {
-            document.body.style.overflow = ''; // Restore scroll
-        }
-    })
-    .to('#bg-canvas', {
-        opacity: 1,
-        duration: 1.5
-    }, "-=0.5")
+// Ensure body is visible and scrollable if preloader is skipped or finishes
+const revealContent = () => {
+    document.body.style.overflow = '';
+    // Hide preloader if it exists
+    const preloader = document.getElementById('preloader');
+    if (preloader) gsap.to(preloader, { yPercent: -100, duration: 1, ease: "power4.inOut" });
+};
+
+preloaderTL
+    .to({}, { duration: 0.5, onComplete: revealContent }) // Short delay to ensure DOM readiness
     .from('.hero-title-tesla', {
-        y: 50,
+        y: 40,
         opacity: 0,
-        duration: 1,
+        duration: 1.2,
         ease: "power3.out"
-    }, "-=1")
+    })
     .from('.hero-subtitle-tesla', {
-        y: 30,
+        y: 20,
         opacity: 0,
         duration: 1,
         ease: "power3.out"
     }, "-=0.8")
     .from('.btn-tesla', {
-        y: 30,
+        y: 20,
         opacity: 0,
-        stagger: 0.2,
+        stagger: 0.15,
         duration: 0.8,
         ease: "power3.out"
     }, "-=0.6")
     .from('#main-nav', {
-        y: -50,
+        y: -30,
         opacity: 0,
         duration: 1,
         ease: "power3.out"
