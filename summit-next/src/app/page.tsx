@@ -27,37 +27,36 @@ export default function Home() {
       {/* ═══════════════════════════════════════════
           SECCIÓN 1 — Hero / Landing
           ═══════════════════════════════════════════ */}
-      <section id="inicio" className="section-full flex items-center justify-center" style={{ background: '#0D1B2A' }}>
-        {/* LightPillar Background */}
-        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-          <LightPillar
-            topColor="#1B2E45"
-            bottomColor="#C45E1A"
-            intensity={0.8}
-            interactive={true}
-            pillarWidth={4.5}
-            quality="high"
-          />
-        </div>
-
-        {/* Hero Content */}
-        <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
-          <GlitchText speed={40} enableShadows={true} enableOnHover={false} className="text-[clamp(3rem,10vw,9rem)] font-black">
+      <section id="inicio" className="section-full flex flex-col items-center justify-between py-24" style={{
+        backgroundImage: 'url("/mountain-bg.jpg")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
+      }}>
+        {/* Hero Content - Top */}
+        <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', marginTop: '4rem' }}>
+          <GlitchText speed={40} enableShadows={true} enableOnHover={false} className="text-[clamp(2.5rem,8vw,7rem)] font-bold tracking-tight text-white">
             SUMMIT AI
           </GlitchText>
 
           <p style={{
-            color: '#8A9BB0',
-            fontSize: 'clamp(0.85rem, 2vw, 1.1rem)',
-            letterSpacing: '0.35em',
-            textTransform: 'uppercase',
-            fontWeight: 400,
+            color: '#FFFFFF',
+            fontSize: 'clamp(0.85rem, 1.5vw, 1rem)',
+            letterSpacing: '0.1em',
+            fontWeight: 500,
+            opacity: 0.9
           }}>
             Software · Automatizaciones · Inteligencia Artificial
           </p>
+        </div>
 
-          <a href="#servicios" className="cta-button" style={{ marginTop: '1rem' }}>
+        {/* Hero Bottom - CTA Buttons */}
+        <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'row', gap: '1.5rem', marginBottom: '2rem', width: '100%', maxWidth: '600px', justifyContent: 'center', padding: '0 2rem' }}>
+          <a href="#servicios" className="cta-button-tesla primary">
             Conocé lo que hacemos
+          </a>
+          <a href="#contacto" className="cta-button-tesla secondary">
+            Contactar
           </a>
         </div>
       </section>

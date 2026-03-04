@@ -38,15 +38,18 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <button
-          className={`hamburger ${menuOpen ? 'open' : ''}`}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
-        >
-          <span />
-          <span />
-          <span />
-        </button>
+        <div className="navbar-right">
+          <a href="#contacto" className="hidden md:block">Contacto</a>
+          <button
+            className={`hamburger ${menuOpen ? 'open' : ''}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
       </nav>
 
       {/* Mobile overlay */}
@@ -62,6 +65,7 @@ export default function Navbar() {
             {link.label}
           </a>
         ))}
+        <a href="#contacto" onClick={closeMenu}>Contacto</a>
       </div>
     </>
   );

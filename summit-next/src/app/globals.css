@@ -16,6 +16,12 @@
   --text-secondary: #8A9BB0;
   --background: #0D1B2A;
   --foreground: #F0F0F0;
+
+  /* Tesla-inspired tokens */
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-blur: 16px;
+  --button-hover: rgba(255, 255, 255, 0.1);
 }
 
 *,
@@ -51,28 +57,34 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
-  padding: 1rem 2rem;
-  display: flex;
+  z-index: 1000;
+  height: 56px;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   background: transparent;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: background-color 0.4s ease;
+  transition: all 0.4s ease;
 }
 
 .navbar.scrolled {
-  background-color: var(--bg-primary);
-  backdrop-filter: none;
+  background: rgba(13, 27, 42, 0.8);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
 }
 
 .navbar-logo {
-  font-size: 1.5rem;
-  font-weight: 800;
-  letter-spacing: 0.05em;
+  justify-self: start;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
   color: var(--text-primary);
   text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.navbar-logo:hover {
+  opacity: 0.7;
 }
 
 .navbar-logo .ai {
@@ -81,24 +93,47 @@ body {
 
 .navbar-links {
   display: flex;
-  gap: 2rem;
+  gap: 1.25rem;
   list-style: none;
   margin: 0;
   padding: 0;
+  justify-self: center;
 }
 
 .navbar-links a {
-  color: var(--text-secondary);
+  color: var(--text-primary);
   text-decoration: none;
   font-size: 0.875rem;
   font-weight: 500;
   letter-spacing: 0.05em;
-  text-transform: uppercase;
-  transition: color 0.3s ease;
+  padding: 4px 12px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
 }
 
 .navbar-links a:hover {
-  color: var(--orange-primary);
+  background-color: var(--button-hover);
+}
+
+.navbar-right {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navbar-right a {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-right a:hover {
+  background-color: var(--button-hover);
 }
 
 .hamburger {
@@ -218,6 +253,42 @@ body {
   background: var(--orange-primary);
   color: var(--text-primary);
   box-shadow: 0 0 30px rgba(196, 94, 26, 0.4), 0 0 60px rgba(196, 94, 26, 0.15);
+}
+
+/* ─── Tesla Button System ─── */
+.cta-button-tesla {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 3rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  min-width: 250px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.cta-button-tesla.primary {
+  background: rgba(23, 26, 32, 0.8);
+  color: #FFFFFF;
+}
+
+.cta-button-tesla.secondary {
+  background: rgba(244, 244, 244, 0.65);
+  color: #393c41;
+}
+
+.cta-button-tesla:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 600px) {
+  .cta-button-tesla {
+    min-width: 100%;
+  }
 }
 
 /* ─── Service Cards ─── */
