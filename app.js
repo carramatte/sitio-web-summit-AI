@@ -76,20 +76,19 @@ preloaderTL.to(progress, {
         opacity: 1,
         duration: 1.5
     }, "-=0.5")
-    .from('.hero-title-word', {
+    .from('.hero-title-tesla', {
         y: 50,
         opacity: 0,
-        stagger: 0.1,
         duration: 1,
         ease: "power3.out"
     }, "-=1")
-    .from('.hero-subtitle', {
+    .from('.hero-subtitle-tesla', {
         y: 30,
         opacity: 0,
         duration: 1,
         ease: "power3.out"
     }, "-=0.8")
-    .from('.hero-cta', {
+    .from('.btn-tesla', {
         y: 30,
         opacity: 0,
         stagger: 0.2,
@@ -110,8 +109,7 @@ preloaderTL.to(progress, {
 ScrollTrigger.create({
     start: "top -50",
     end: 99999,
-    toggleClass: { className: "bg-brand-navy/90 backdrop-blur-lg border-b border-brand-border py-4", targets: "#main-nav" },
-    onLeaveBack: () => gsap.set('#main-nav', { clearProps: "all" })
+    toggleClass: { className: "scrolled", targets: "#main-nav" }
 });
 
 // Setup Reveal elements for service cards and sections
