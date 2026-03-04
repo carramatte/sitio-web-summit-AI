@@ -5,41 +5,36 @@ gsap.registerPlugin(ScrollTrigger);
 document.body.style.overflow = 'hidden';
 
 // ==========================================
-// 1. CUSTOM CURSOR
+// 1. CUSTOM CURSOR (Lag effect)
 // ==========================================
 const cursor = document.getElementById('custom-cursor');
-const cursorDot = document.getElementById('cursor-dot');
+let mouseX = 0, mouseY = 0;
+let cursorX = 0, cursorY = 0;
 
-if (window.innerWidth >= 768) {
-    window.addEventListener('mousemove', (e) => {
-        // Smooth trailing effect for the ring
-        gsap.to(cursor, {
-            x: e.clientX,
-            y: e.clientY,
-            duration: 0.15,
-            ease: "power2.out"
-        });
-        // Instant for the dot
-        gsap.to(cursorDot, {
-            x: e.clientX,
-            y: e.clientY,
-            duration: 0,
-        });
-    });
+window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+});
 
-    // Hover effects on links and buttons
-    const interactables = document.querySelectorAll('a, button, input, textarea');
-    interactables.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            gsap.to(cursor, { scale: 1.5, borderColor: '#00F0FF', duration: 0.3 });
-            gsap.to(cursorDot, { scale: 0, duration: 0.3 });
-        });
-        el.addEventListener('mouseleave', () => {
-            gsap.to(cursor, { scale: 1, borderColor: '#FF7E00', duration: 0.3 });
-            gsap.to(cursorDot, { scale: 1, duration: 0.3 });
-        });
-    });
-}
+const animateCursor = () => {
+    let dx = mouseX - cursorX;
+    let dy = mouseY - cursorY;
+
+    cursorX += dx * 0.15; // Delay / Lag factor
+    cursorY += dy * 0.15;
+
+    if (cursor) {
+        cursor.style.transform = `translate(${cursorX - 10}px, ${cursorY - 10}px)`;
+    }
+    requestAnimationFrame(animateCursor);
+};
+animateCursor();
+
+// Interactions
+document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.style.transform += ' scale(2)');
+    el.addEventListener('mouseleave', () => cursor.style.transform = cursor.style.transform.replace(' scale(2)', ''));
+});
 
 // ==========================================
 // 2. INTRO ANIMATION (Tesla Style)
@@ -83,27 +78,103 @@ preloaderTL
     }, "-=1");
 
 // ==========================================
-// 3. SCROLL EFFECTS (GSAP)
+// 3. CYBERPUNK ENHANCEMENTS (Glitch, Particles, Reveal)
 // ==========================================
-// Nav background change on scroll
-ScrollTrigger.create({
-    start: "top -50",
-    end: 99999,
-    toggleClass: { className: "scrolled", targets: "#main-nav" }
-});
 
-// Setup Reveal elements for service cards and sections
-document.querySelectorAll('section:not([data-purpose="hero"]), .glass-card').forEach((el) => {
-    gsap.from(el, {
-        scrollTrigger: {
-            trigger: el,
-            start: "top 85%",
-        },
-        y: 50,
-        opacity: 0,
-        duration: 1.2,
-        ease: "power3.out"
+// Glitch Effect
+const glitchTitle = document.getElementById('glitch-title');
+const originalText = "SUMMIT AI";
+const chars = "!<>-_\\/[]{}—=+*^?#________";
+
+const triggerGlitch = () => {
+    if (!glitchTitle) return;
+    let iterations = 0;
+    const interval = setInterval(() => {
+        glitchTitle.innerText = originalText.split("")
+            .map((char, index) => {
+                if (index < iterations) return originalText[index];
+                return chars[Math.floor(Math.random() * chars.length)];
+            })
+            .join("");
+
+        if (iterations >= originalText.length) clearInterval(interval);
+        iterations += 1 / 3;
+    }, 30);
+};
+setInterval(triggerGlitch, 5000);
+
+// Canvas Particles
+const initParticles = () => {
+    const canvas = document.getElementById('hero-particles');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particlesArray = [];
+    const colors = ['#C45E1A', '#1B2E45'];
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 3 + 1;
+            this.speedX = Math.random() * 1 - 0.5;
+            this.speedY = Math.random() * 1 - 0.5;
+            this.color = colors[Math.floor(Math.random() * colors.length)];
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.x > canvas.width) this.x = 0;
+            if (this.x < 0) this.x = canvas.width;
+            if (this.y > canvas.height) this.y = 0;
+            if (this.y < 0) this.y = canvas.height;
+        }
+        draw() {
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    const handleParticles = () => {
+        for (let i = 0; i < 50; i++) particlesArray.push(new Particle());
+    };
+    handleParticles();
+
+    const animate = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particlesArray.forEach(p => { p.update(); p.draw(); });
+        requestAnimationFrame(animate);
+    };
+    animate();
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
     });
+};
+initParticles();
+
+// Scroll Reveal Observer
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+
+            // Sweep transition effect
+            const sweep = document.getElementById('transition-sweep');
+            if (sweep) {
+                gsap.fromTo(sweep, { left: '-100%' }, { left: '100%', duration: 1, ease: "power2.inOut" });
+            }
+        }
+    });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.reveal, section').forEach(el => {
+    if (!el.id || el.id !== 'hero-tesla') revealObserver.observe(el);
 });
 
 // Glass cards tilt effect
@@ -156,7 +227,7 @@ const initThreeJS = () => {
     if (!canvas) return;
     const scene = new THREE.Scene();
     // Cyberpunk fog
-    scene.fog = new THREE.FogExp2(0x020408, 0.0015);
+    scene.fog = new THREE.FogExp2(0x0D1B2A, 0.0015);
 
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.z = 50;
@@ -173,7 +244,7 @@ const initThreeJS = () => {
     const colorArray = new Float32Array(particlesCount * 3);
 
     const colorOptions = [
-        new THREE.Color('#FF7E00'), // Orange
+        new THREE.Color('#C45E1A'), // Orange
         new THREE.Color('#00F0FF'), // Cyan
         new THREE.Color('#8B5CF6'), // Violet
         new THREE.Color('#ffffff')  // White

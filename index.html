@@ -23,10 +23,12 @@
         extend: {
           colors: {
             brand: {
-              navy: '#020408',
-              orange: '#FF7E00',
+              navy: '#0D1B2A',
+              orange: '#C45E1A',
               glass: 'rgba(255, 255, 255, 0.03)',
               border: 'rgba(255, 255, 255, 0.1)',
+              'text-main': '#F0F0F0',
+              'accent-blue': '#1B2E45',
             }
           },
           fontFamily: {
@@ -58,8 +60,8 @@
   <!-- BEGIN: Custom Styles -->
   <style data-purpose="layout">
     body {
-      background-color: #020408;
-      color: #ffffff;
+      background-color: #0D1B2A;
+      color: #F0F0F0;
       overflow-x: hidden;
       font-family: 'Inter', sans-serif;
     }
@@ -193,6 +195,114 @@
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.1);
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 3. Scanlines Overlay */
+    .scanlines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom,
+          rgba(18, 16, 16, 0) 50%,
+          rgba(0, 0, 0, 0.05) 50%);
+      background-size: 100% 4px;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.3;
+    }
+
+    /* 7. Grid Perspective */
+    .grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(27, 46, 69, 0.1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(27, 46, 69, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      mask-image: linear-gradient(to bottom, transparent, black, transparent);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* 2. Custom Cursor */
+    #custom-cursor {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      background: #C45E1A;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10000;
+      mix-blend-mode: difference;
+      transition: transform 0.1s ease-out;
+      display: none;
+    }
+
+    @media (hover: hover) {
+      #custom-cursor {
+        display: block;
+      }
+
+      body {
+        cursor: none;
+      }
+    }
+
+    /* 6. Neon Hover Effects */
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .glass-card:hover::before {
+      border-color: #C45E1A;
+      box-shadow: 0 0 15px #C45E1A, inset 0 0 10px #C45E1A;
+      animation: neon-pulse 1.5s infinite;
+    }
+
+    @keyframes neon-pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.7;
+      }
+    }
+
+    /* 8. Transition Sweep */
+    #transition-sweep {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 4px;
+      background: #C45E1A;
+      box-shadow: 0 0 20px #C45E1A;
+      z-index: 10001;
+      pointer-events: none;
+    }
+
+    /* 1. Scroll Reveal Classes */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     @media (max-width: 768px) {
@@ -220,6 +330,9 @@
 </head>
 
 <body class="antialiased">
+  <div id="custom-cursor"></div>
+  <div class="scanlines"></div>
+  <div id="transition-sweep"></div>
 
   <!-- BEGIN: Navigation -->
   <nav class="fixed top-0 w-full" id="main-nav">
@@ -243,8 +356,10 @@
 
   <!-- BEGIN: Hero Section -->
   <section id="hero-tesla" data-purpose="hero">
+    <canvas id="hero-particles" style="position: absolute; inset: 0; z-index: 0;"></canvas>
+    <div class="grid-overlay"></div>
     <div class="hero-text-top">
-      <h1 class="hero-title-tesla">SUMMIT AI</h1>
+      <h1 class="hero-title-tesla" id="glitch-title">SUMMIT AI</h1>
       <p class="hero-subtitle-tesla">Software · Automatizaciones · Inteligencia Artificial</p>
     </div>
 
@@ -260,10 +375,10 @@
     <div class="max-w-7xl mx-auto px-6 relative">
       <!-- Gradient Masks -->
       <div
-        class="absolute left-0 top-0 w-16 md:w-32 h-16 bg-gradient-to-r from-[#020408] to-transparent z-10 pointer-events-none">
+        class="absolute left-0 top-0 w-16 md:w-32 h-16 bg-gradient-to-r from-[#0D1B2A] to-transparent z-10 pointer-events-none">
       </div>
       <div
-        class="absolute right-0 top-0 w-16 md:w-32 h-16 bg-gradient-to-l from-[#020408] to-transparent z-10 pointer-events-none">
+        class="absolute right-0 top-0 w-16 md:w-32 h-16 bg-gradient-to-l from-[#0D1B2A] to-transparent z-10 pointer-events-none">
       </div>
 
       <!-- Infinite Scroll Carousel -->
@@ -306,7 +421,7 @@
   </section>
   <!-- END: Stats & Logos -->
   <!-- BEGIN: Services Section -->
-  <section class="py-32 px-6" data-purpose="services" id="servicios">
+  <section class="py-32 px-6 reveal" data-purpose="services" id="servicios">
     <div class="max-w-7xl mx-auto">
       <div class="mb-20">
         <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Ingeniería <br />de Vanguardia.</h2>
@@ -314,7 +429,7 @@
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <!-- Service Card 1 -->
-        <div class="glass-card p-10 flex flex-col h-full" data-purpose="service-card">
+        <div class="glass-card p-10 flex flex-col h-full reveal" data-purpose="service-card">
           <div class="mb-8 text-brand-orange">
             <svg class="w-12 h-12" fill="none" stroke="currentColor" viewbox="0 0 24 24">
               <path
@@ -332,7 +447,7 @@
           </ul>
         </div>
         <!-- Service Card 2 -->
-        <div class="glass-card p-10 flex flex-col h-full" data-purpose="service-card">
+        <div class="glass-card p-10 flex flex-col h-full reveal" data-purpose="service-card">
           <div class="mb-8 text-brand-orange">
             <svg class="w-12 h-12" fill="none" stroke="currentColor" viewbox="0 0 24 24">
               <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
@@ -349,7 +464,7 @@
           </ul>
         </div>
         <!-- Service Card 3 -->
-        <div class="glass-card p-10 flex flex-col h-full" data-purpose="service-card">
+        <div class="glass-card p-10 flex flex-col h-full reveal" data-purpose="service-card">
           <div class="mb-8 text-brand-orange">
             <svg class="w-12 h-12" fill="none" stroke="currentColor" viewbox="0 0 24 24">
               <path d="M4 7v10c0 2 1.5 3 3.5 3h9c2 0 3.5-1 3.5-3V7c0-2-1.5-3-3.5-3h-9C5.5 4 4 5 4 7z"
@@ -395,7 +510,7 @@
   </section>
   <!-- END: Breaker Section -->
   <!-- BEGIN: Contact Section -->
-  <section class="py-32 px-6" data-purpose="contact" id="contacto">
+  <section class="py-32 px-6 reveal" data-purpose="contact" id="contacto">
     <div class="max-w-3xl mx-auto text-center mb-16">
       <h2 class="text-4xl font-extrabold mb-6">Inicie su Evolución.</h2>
       <p class="text-gray-400 font-light">Complete el formulario y un consultor senior se pondrá en contacto en menos de
