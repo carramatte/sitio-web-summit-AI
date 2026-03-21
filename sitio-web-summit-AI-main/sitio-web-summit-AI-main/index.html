@@ -1,17 +1,15 @@
 <!DOCTYPE html>
-<html class="scroll-smooth bg-[#0D1B2A] text-[#F0F0F0]" lang="es">
+<html class="scroll-smooth bg-[#0D1B2A] text-white" lang="es">
 
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title>Summit AI | El Futuro es Autónomo</title>
-  <meta content="Consultoría líder en IA y automatización avanzada para empresas del futuro." name="description" />
+  <title>Summit AI | Autonomía Corporativa</title>
+  <meta content="Consultoría líder en IA y automatización avanzada para corporaciones." name="description" />
   <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
-  <!-- GSAP & Three.js CDNs -->
+  <!-- GSAP CDNs -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <!-- Apple-like Typography: Inter -->
+  <!-- Apple-like Typography: Inter for grotesque geometric brutality -->
   <link href="https://fonts.googleapis.com" rel="preconnect" />
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
@@ -24,46 +22,33 @@
             brand: {
               navy: '#0D1B2A',
               orange: '#C45E1A',
-              glass: 'rgba(255, 255, 255, 0.03)',
-              border: 'rgba(255, 255, 255, 0.1)',
-              'text-main': '#F0F0F0',
-              'accent-blue': '#1B2E45',
+              white: '#FFFFFF',
+              gray: '#8892B0'
             }
           },
           fontFamily: {
             sans: ['Inter', 'sans-serif'],
-          },
-          transitionDuration: {
-            '200': '200ms',
-            '300': '300ms',
           }
         }
       }
     }
   </script>
   <style>
-    /* CSS Variables & Global Resets */
+    /* BRUTAL MINIMALISM RESETS */
     body {
       background-color: #0D1B2A;
-      color: #F0F0F0;
+      color: #FFFFFF;
       font-family: 'Inter', sans-serif;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Fixed Canvas for Three.js (Linear.app dark aesthetic) */
-    #bg-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -1;
-      pointer-events: none;
-      opacity: 0.6;
-      /* Muted tech background */
+    ::selection {
+      background: #C45E1A;
+      color: #FFFFFF;
     }
 
-    /* Navbar - Linear/Apple Glassmorphism */
+    /* Navbar - Brutal Solid */
     #main-nav {
       transition: all 300ms ease;
       background: transparent;
@@ -71,94 +56,153 @@
     }
 
     #main-nav.scrolled {
-      background: rgba(13, 27, 42, 0.7);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      background: #0D1B2A;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .nav-link {
-      color: rgba(240, 240, 240, 0.7);
-      transition: color 200ms ease;
+    .nav-btn {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 200ms ease;
     }
 
-    .nav-link:hover {
-      color: #F0F0F0;
+    .nav-btn:hover {
+      background: #FFFFFF;
+      color: #0D1B2A;
+      border-color: #FFFFFF;
     }
 
-    /* Hero Section - Tesla 100vh */
+    /* Hero Section - Editorial & Strict */
     .hero-section {
       height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
-      text-align: center;
       position: relative;
     }
 
-    /* Glass Cards - Linear style */
-    .glass-card {
-      background: rgba(255, 255, 255, 0.02);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      transition: all 300ms ease;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('mountain-bf.jpg');
+      background-size: cover;
+      background-position: center;
+      /* Brutal desaturation and darkening */
+      filter: grayscale(50%) contrast(1.1);
+      opacity: 0.25;
+      z-index: -2;
+      pointer-events: none;
     }
 
-    .glass-card:hover {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      transform: translateY(-2px);
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(13, 27, 42, 0) 0%, #0D1B2A 100%);
+      z-index: -1;
+      pointer-events: none;
     }
 
-    /* Buttons - Minimalist */
-    .btn-minimal {
-      border: 1px solid rgba(255, 255, 255, 0.2);
+    /* Typography - Premium Corporate */
+    .headline {
+      letter-spacing: -0.05em;
+      line-height: 0.95;
+      font-weight: 800;
+    }
+
+    .subheadline {
+      letter-spacing: -0.01em;
+      line-height: 1.5;
+      color: #8892B0;
+    }
+
+    .eyebrow {
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #C45E1A;
+    }
+
+    /* Components - Brutal Edges (No Rounding, No Shadows) */
+    .btn-solid {
+      background: #C45E1A;
+      color: #FFFFFF;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      border: 1px solid #C45E1A;
+      transition: all 200ms ease;
+    }
+
+    .btn-solid:hover {
       background: transparent;
-      color: #F0F0F0;
+      color: #C45E1A;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.3);
       transition: all 200ms ease;
-      backdrop-filter: blur(8px);
     }
 
-    .btn-minimal:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.4);
-    }
-
-    .btn-primary {
-      background: #F0F0F0;
+    .btn-outline:hover {
+      border-color: #FFFFFF;
+      background: #FFFFFF;
       color: #0D1B2A;
-      transition: all 200ms ease;
     }
 
-    .btn-primary:hover {
-      background: #ffffff;
-      transform: scale(1.02);
-    }
-
-    /* Inputs Linear Style */
-    .glass-input {
-      background: rgba(255, 255, 255, 0.03);
+    .brutal-card {
+      background: transparent;
       border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #F0F0F0;
+      transition: all 300ms ease;
+      position: relative;
+    }
+
+    .brutal-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: #C45E1A;
+      transition: width 300ms ease;
+    }
+
+    .brutal-card:hover {
+      background: rgba(255, 255, 255, 0.02);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .brutal-card:hover::before {
+      width: 100%;
+    }
+
+    /* Inputs - Sharp & Strict */
+    .brutal-input {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #FFFFFF;
+      border-radius: 0;
       transition: all 200ms ease;
     }
 
-    .glass-input:focus {
+    .brutal-input:focus {
       outline: none;
-      background: rgba(255, 255, 255, 0.06);
       border-color: #C45E1A;
-      box-shadow: 0 0 0 1px #C45E1A;
+      background: rgba(255, 255, 255, 0.02);
     }
 
-    /* Scroll Reveal - Max 300ms */
+    /* Reveal Animations - Speedy and Linear */
     .reveal {
       opacity: 0;
-      transform: translateY(20px);
-      transition: all 300ms ease-out;
+      transform: translateY(15px);
+      transition: all 300ms cubic-bezier(0.0, 0.0, 0.2, 1);
     }
 
     .reveal.active {
@@ -166,273 +210,269 @@
       transform: translateY(0);
     }
 
-    /* Typography Apple */
-    .headline {
-      letter-spacing: -0.04em;
-      line-height: 1.05;
-    }
-
-    .subheadline {
-      letter-spacing: -0.01em;
-      line-height: 1.5;
-    }
-
-    /* Immersive Mountain Background */
-    .hero-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url('mountain-bg.jpg');
-      background-size: cover;
-      background-position: center;
-      opacity: 0.3;
-      /* Subtle to not overpower UI */
-      z-index: -2;
-      pointer-events: none;
-      mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+    /* Grid layout */
+    .brutal-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 2rem;
     }
   </style>
 </head>
 
-<body class="antialiased font-sans webkit-font-smoothing">
-  <!-- 3D Canvas Background -->
-  <canvas id="bg-canvas"></canvas>
-
+<body>
   <!-- Navbar -->
-  <nav id="main-nav" class="fixed top-0 w-full z-50 h-16 px-6 lg:px-12 flex items-center justify-between">
-    <div class="text-xl font-bold tracking-tight text-white cursor-pointer">
-      SUMMIT<span class="text-brand-orange opacity-90 font-medium">AI</span>
+  <nav id="main-nav" class="fixed top-0 w-full z-50 h-[72px] px-6 lg:px-12 flex items-center justify-between">
+    <div class="text-xl font-bold tracking-tight text-white eyebrow"
+      style="font-size: 1.1rem; letter-spacing: 0.1em; color: white;">
+      SUMMIT<span class="text-brand-orange">AI</span>
     </div>
 
-    <div class="hidden md:flex items-center gap-8 text-sm font-medium">
-      <a href="#servicios" class="nav-link">Servicios</a>
-      <a href="#casos" class="nav-link">Casos</a>
-      <a href="#contacto" class="nav-link">Contacto</a>
+    <div class="hidden md:flex items-center gap-8 text-xs font-semibold tracking-widest uppercase">
+      <a href="#servicios" class="text-white/60 hover:text-white transition-colors">Infraestructura</a>
+      <a href="#casos" class="text-white/60 hover:text-white transition-colors">Métrica</a>
+      <a href="#contacto" class="nav-btn px-6 py-2.5">Iniciar Operación</a>
     </div>
 
     <!-- Mobile Menu Trigger -->
-    <div class="md:hidden text-white cursor-pointer opacity-70 hover:opacity-100 transition-opacity duration-200">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+    <div class="md:hidden text-white cursor-pointer opacity-70 hover:opacity-100">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M4 6h16M4 12h16M4 18h16" />
       </svg>
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <section class="hero-section px-6 relative" id="hero">
+  <!-- Hero Section (Editorial Left-Aligned) -->
+  <section class="hero-section px-6 lg:px-12 pt-16" id="hero">
     <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
 
-    <div class="max-w-4xl mx-auto z-10 w-full flex flex-col items-center">
-      <!-- Apple style massive headline -->
-      <h1
-        class="headline text-6xl md:text-8xl lg:text-9xl font-bold text-white mb-6 text-center reveal tracking-tighter">
-        Autonomía<br />Inteligente.
-      </h1>
+    <div class="max-w-7xl mx-auto w-full brutal-grid">
+      <div class="col-span-12 md:col-span-10 lg:col-span-8 flex flex-col items-start text-left z-10">
 
-      <p class="subheadline text-lg md:text-2xl text-[rgba(240,240,240,0.6)] max-w-2xl text-center mb-12 font-medium reveal"
-        style="transition-delay: 100ms;">
-        Arquitecturas de inteligencia artificial y automatización avanzada para las empresas del mañana.
-      </p>
+        <div class="eyebrow mb-6 reveal">SISTEMAS AUTÓNOMOS CORPORATIVOS</div>
 
-      <div class="flex flex-col sm:flex-row gap-4 reveal" style="transition-delay: 200ms;">
-        <a href="#contacto"
-          class="btn-primary px-8 py-4 rounded-full text-sm font-semibold tracking-wide flex items-center justify-center gap-2">
-          Iniciar Proyecto
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </a>
+        <h1 class="headline text-6xl md:text-[7rem] lg:text-[8rem] text-white mb-8 reveal"
+          style="transition-delay: 100ms;">
+          Rendimiento<br />Asimétrico.
+        </h1>
+
+        <p class="subheadline text-lg md:text-2xl max-w-2xl mb-12 reveal border-l-2 border-brand-orange pl-6"
+          style="transition-delay: 200ms;">
+          Reestructuramos el núcleo operativo de su corporación eliminando la redundancia manual mediante agentes de
+          Inteligencia Artificial especializados. Sin latencias. Sin márgenes de error.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 reveal w-full sm:w-auto" style="transition-delay: 300ms;">
+          <a href="#contacto"
+            class="btn-solid px-8 py-4 uppercase text-xs sm:text-sm flex items-center justify-center gap-3 w-full sm:w-auto">
+            Desplegar Arquitectura
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+          <a href="#servicios"
+            class="btn-outline px-8 py-4 uppercase text-xs sm:text-sm flex items-center justify-center w-full sm:w-auto">
+            Explorar Módulos
+          </a>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- Stats / Trust Break -->
-  <section
-    class="min-h-[40vh] flex flex-col justify-center py-20 px-6 border-y border-white/5 bg-[#0D1B2A]/50 backdrop-blur-sm relative z-10">
-    <div class="max-w-6xl mx-auto w-full">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8">
-        <div class="reveal flex flex-col items-center justify-center text-center">
-          <div class="text-6xl md:text-7xl font-bold text-brand-orange mb-4 headline">+300%</div>
-          <div class="text-xs font-semibold tracking-wider text-white/50 uppercase">Eficiencia Operativa</div>
-        </div>
-        <div class="reveal flex flex-col items-center justify-center text-center" style="transition-delay: 100ms;">
-          <div class="text-6xl md:text-7xl font-bold text-white mb-4 headline">24/7</div>
-          <div class="text-xs font-semibold tracking-wider text-white/50 uppercase">Disponibilidad Autónoma</div>
-        </div>
-        <div class="reveal flex flex-col items-center justify-center text-center" style="transition-delay: 200ms;">
-          <div class="text-6xl md:text-7xl font-bold text-brand-orange mb-4 headline">-60%</div>
-          <div class="text-xs font-semibold tracking-wider text-white/50 uppercase">Costes de Integración</div>
-        </div>
+  <!-- Data Strip (Brutal Metric Bar) -->
+  <section class="border-y border-white/10 bg-[#0D1B2A] py-12 px-6">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-12 md:gap-4">
+      <div class="reveal">
+        <div class="eyebrow mb-2">Velocidad Operativa</div>
+        <div class="text-4xl md:text-5xl font-bold text-white tracking-tighter">0.8<span
+            class="text-brand-orange text-2xl">SEG</span></div>
+      </div>
+      <div class="reveal" style="transition-delay: 100ms;">
+        <div class="eyebrow mb-2">Disponibilidad del Sistema</div>
+        <div class="text-4xl md:text-5xl font-bold text-white tracking-tighter">99.9<span
+            class="text-brand-orange text-2xl">%</span></div>
+      </div>
+      <div class="reveal" style="transition-delay: 200ms;">
+        <div class="eyebrow mb-2">Reducción de Costes Base</div>
+        <div class="text-4xl md:text-5xl font-bold text-white tracking-tighter">60<span
+            class="text-brand-orange text-2xl">%</span></div>
       </div>
     </div>
   </section>
 
-  <!-- Services Section -->
-  <section class="min-h-screen py-32 px-6 flex flex-col justify-center relative z-10" id="servicios">
-    <div class="max-w-6xl mx-auto w-full">
+  <!-- Infrastructure Section -->
+  <section class="py-32 px-6 bg-[#0D1B2A]" id="servicios">
+    <div class="max-w-7xl mx-auto">
 
-      <div class="mb-20 max-w-3xl reveal">
-        <h2 class="headline text-4xl md:text-6xl font-bold text-white mb-6">Sistemas que<br />trabajan sin descanso.
-        </h2>
-        <p class="text-lg text-white/60 font-medium leading-relaxed">Reemplazamos flujos de trabajo manuales con
-          arquitecturas autónomas eficientes, precisas y escalables.</p>
+      <div
+        class="mb-20 flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/10 pb-12 reveal">
+        <div>
+          <div class="eyebrow mb-4">Módulos de Integración</div>
+          <h2 class="headline text-4xl md:text-6xl text-white">Infraestructura<br />Operativa</h2>
+        </div>
+        <p class="text-brand-gray max-w-sm md:text-right font-medium">
+          Módulos de automatización desarrollados para integrarse nativamente en su arquitectura de datos existente.
+        </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border border-white/10">
 
-        <!-- Service 1 -->
-        <div class="glass-card p-8 md:p-10 reveal flex flex-col gap-6">
-          <div
-            class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center bg-white/5 text-white">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <!-- Module 1 -->
+        <div class="brutal-card p-10 reveal border-b md:border-b-0 md:border-r border-white/10">
+          <div class="text-brand-orange mb-8">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
             </svg>
           </div>
-          <div>
-            <h3 class="text-xl font-bold text-white mb-3 tracking-tight">Agentes de WhatsApp</h3>
-            <p class="text-sm text-white/60 leading-relaxed mb-6">Integración de modelos fundacionales para atención al
-              cliente y calificación de leads sin latencia.</p>
-            <div
-              class="bg-black/30 rounded-lg p-4 border border-white/5 text-xs text-brand-orange font-medium flex gap-3 flex-col">
-              <div class="flex items-center gap-2">
-                <div class="w-1.5 h-1.5 rounded-full bg-brand-orange"></div>Respuesta en &lt; 1s
-              </div>
-              <div class="flex items-center gap-2">
-                <div class="w-1.5 h-1.5 rounded-full bg-white/20"></div>Contexto historial cliente
-              </div>
-            </div>
-          </div>
+          <h3 class="text-2xl font-bold text-white mb-4 tracking-tight">Agentes de <br />WhatsApp</h3>
+          <p class="text-sm text-brand-gray leading-relaxed mb-8">
+            Despliegue de modelos de lenguaje sobre protocolos de mensajería empresarial para calificación de leads
+            instantánea y sin fricción.
+          </p>
+          <ul class="text-xs text-brand-gray space-y-3 font-medium">
+            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-brand-orange block"></span> Conexión API
+              nativa</li>
+            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-brand-orange block"></span> Toma de
+              decisiones en tiempo real</li>
+          </ul>
         </div>
 
-        <!-- Service 2 -->
-        <div class="glass-card p-8 md:p-10 reveal flex flex-col gap-6" style="transition-delay: 100ms;">
-          <div
-            class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center bg-white/5 text-white">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <!-- Module 2 -->
+        <div class="brutal-card p-10 reveal border-b md:border-b-0 md:border-r border-white/10"
+          style="transition-delay: 100ms;">
+          <div class="text-brand-orange mb-8">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
             </svg>
           </div>
-          <div>
-            <h3 class="text-xl font-bold text-white mb-3 tracking-tight">Captura Integrada</h3>
-            <p class="text-sm text-white/60 leading-relaxed mb-6">Ecosistema automatizado desde el formulario web hasta
-              el CRM de ventas con disparadores inmediatos.</p>
-            <div
-              class="bg-black/30 rounded-lg p-4 border border-white/5 text-xs text-white font-medium flex gap-3 flex-col">
-              <div class="flex items-center gap-2">
-                <div class="w-1.5 h-1.5 rounded-full bg-white"></div>Sincronización de bases de datos
-              </div>
-              <div class="flex items-center gap-2">
-                <div class="w-1.5 h-1.5 rounded-full bg-white/20"></div>Segmentación automática
-              </div>
-            </div>
-          </div>
+          <h3 class="text-2xl font-bold text-white mb-4 tracking-tight">Captura de <br />Datos y CRM</h3>
+          <p class="text-sm text-brand-gray leading-relaxed mb-8">
+            Ecosistema de canalización automática para sincronización de bases de datos. Captura, enrutamiento y
+            alojamiento 100% seguro.
+          </p>
+          <ul class="text-xs text-brand-gray space-y-3 font-medium">
+            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-brand-orange block"></span> Webhooks
+              asíncronos</li>
+            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-brand-orange block"></span> Integración
+              HubSpot/Salesforce</li>
+          </ul>
         </div>
 
-        <!-- Service 3 -->
-        <div class="glass-card p-8 md:p-10 reveal flex flex-col gap-6" style="transition-delay: 200ms;">
-          <div
-            class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center bg-white/5 text-white">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <!-- Module 3 -->
+        <div class="brutal-card p-10 reveal" style="transition-delay: 200ms;">
+          <div class="text-brand-orange mb-8">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
               <line x1="3" y1="6" x2="21" y2="6"></line>
               <path d="M16 10a4 4 0 0 1-8 0"></path>
             </svg>
           </div>
-          <div>
-            <h3 class="text-xl font-bold text-white mb-3 tracking-tight">E-commerce Autónomo</h3>
-            <p class="text-sm text-white/60 leading-relaxed mb-6">Motores de recomendación y flujos de retención
-              post-compra operando silenciosamente.</p>
-            <div
-              class="bg-black/30 rounded-lg p-4 border border-white/5 text-xs text-white font-medium flex gap-3 flex-col">
-              <div class="flex items-center gap-2">
-                <div class="w-1.5 h-1.5 rounded-full bg-white"></div>Upselling secuencial
-              </div>
-              <div class="flex items-center gap-2">
-                <div class="w-1.5 h-1.5 rounded-full bg-white/20"></div>Recuperación de carritos
-              </div>
-            </div>
-          </div>
+          <h3 class="text-2xl font-bold text-white mb-4 tracking-tight">Motores <br />E-commerce</h3>
+          <p class="text-sm text-brand-gray leading-relaxed mb-8">
+            Algoritmos predictivos orientados a la retención y recuperación. Arquitectura diseñada para la conversión y
+            optimización de LTV.
+          </p>
+          <ul class="text-xs text-brand-gray space-y-3 font-medium">
+            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-brand-orange block"></span> Analítica
+              predictiva</li>
+            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-brand-orange block"></span> Upselling
+              automatizado</li>
+          </ul>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- Breaker Section - Very Dark Full Center -->
-  <section
-    class="min-h-[80vh] flex flex-col items-center justify-center py-32 px-6 bg-[#04080D]/80 backdrop-blur-md border-y border-white/5 relative z-10 text-center"
-    id="casos">
+  <!-- Minimal Breaker -->
+  <section class="border-y border-white/10 bg-[#0A1522] py-32 px-6 text-center" id="casos">
     <div class="max-w-4xl mx-auto reveal">
-      <h2 class="headline text-4xl md:text-7xl font-bold text-brand-orange mb-8">El código como infraestructura.</h2>
-      <p class="text-xl text-white/60 font-light max-w-2xl mx-auto leading-relaxed">
-        No hablamos de potencial, construimos realidades. Diseñamos con la premisa de que menos capas resultan en mayor
-        resiliencia. La simplicidad empodera el rendimiento.
-      </p>
+      <div class="eyebrow mb-6">FILOSOFÍA DE DESARROLLO</div>
+      <h2 class="headline text-3xl md:text-5xl text-white mb-8">La fricción destruye el valor. <br /><span
+          class="text-brand-gray">Nosotros eliminamos la fricción.</span></h2>
     </div>
   </section>
 
-  <!-- Contact Form Section -->
-  <section class="min-h-screen flex flex-col justify-center py-32 px-6 relative z-10" id="contacto">
-    <div class="max-w-xl mx-auto w-full">
-      <div class="text-center mb-16 reveal">
-        <h2 class="headline text-4xl md:text-5xl font-bold text-white mb-4">Iniciar Despliegue.</h2>
-        <p class="text-white/50 text-base font-medium">Asignaremos un arquitecto para revisar su infraestructura en 24
-          horas.</p>
+  <!-- Strict Contact Form -->
+  <section class="py-32 px-6 bg-[#0D1B2A]" id="contacto">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-16 md:gap-24">
+
+      <!-- Copy Details -->
+      <div class="flex-1 reveal">
+        <div class="eyebrow mb-4">INICIAR OPERACIÓN</div>
+        <h2 class="headline text-4xl md:text-6xl text-white mb-8">Despliegue<br />Inmediato.</h2>
+        <p class="text-brand-gray text-base leading-relaxed mb-12 max-w-md">
+          Nuestro equipo de arquitectos técnicos está preparado para evaluar la topología de automatización adecuada
+          para sus procesos empresariales en un plazo máximo de 24 horas.
+        </p>
+
+        <div class="space-y-6 border-l border-white/10 pl-6">
+          <div>
+            <div class="text-xs text-brand-gray font-semibold mb-1 uppercase tracking-wider">Protocolo de Evaluación
+            </div>
+            <div class="text-white font-medium">Alojamiento Cloud / On-Premise</div>
+          </div>
+          <div>
+            <div class="text-xs text-brand-gray font-semibold mb-1 uppercase tracking-wider">Acuerdos de Privacidad
+            </div>
+            <div class="text-white font-medium">Estandarización ISO 27001 compatible</div>
+          </div>
+        </div>
       </div>
 
-      <div class="glass-card p-8 md:p-12 reveal" style="transition-delay: 100ms;">
+      <!-- Brutal Form -->
+      <div class="flex-1 w-full reveal bg-[#0A1522] p-8 md:p-12 border border-white/10"
+        style="transition-delay: 100ms;">
         <form id="contactForm" class="flex flex-col gap-6">
           <div class="flex flex-col gap-2">
-            <label class="text-xs font-semibold tracking-wide text-white/50 uppercase">Identificación</label>
-            <input id="contactName" name="name" required class="glass-input w-full px-4 py-3 rounded-lg text-sm"
-              placeholder="Tim Cook" type="text" />
+            <label class="eyebrow">Acreditación</label>
+            <input id="contactName" name="name" required class="brutal-input w-full px-4 py-4 text-sm"
+              placeholder="Ej. Elon Musk" type="text" />
           </div>
 
           <div class="flex flex-col gap-2">
-            <label class="text-xs font-semibold tracking-wide text-white/50 uppercase">Correo Corporativo</label>
-            <input id="contactEmail" name="email" required class="glass-input w-full px-4 py-3 rounded-lg text-sm"
-              placeholder="tim@apple.com" type="email" />
+            <label class="eyebrow">Dominio Corporativo</label>
+            <input id="contactEmail" name="email" required class="brutal-input w-full px-4 py-4 text-sm"
+              placeholder="elon@tesla.com" type="email" />
           </div>
 
           <div class="flex flex-col gap-2">
-            <label class="text-xs font-semibold tracking-wide text-white/50 uppercase">Parámetros del Proyecto</label>
+            <label class="eyebrow">Especificaciones Técnicas</label>
             <textarea id="contactMessage" name="message" required
-              class="glass-input w-full px-4 py-3 rounded-lg text-sm min-h-[120px] resize-none"
-              placeholder="Descripción de la arquitectura a automatizar..."></textarea>
+              class="brutal-input w-full px-4 py-4 text-sm min-h-[160px] resize-none"
+              placeholder="Describa brevemente el ecosistema y la latencia operativa actual..."></textarea>
           </div>
 
-          <div id="contactStatus" class="hidden text-sm font-medium text-center p-4 rounded-lg border"></div>
+          <div id="contactStatus" class="hidden text-sm font-semibold text-center p-4 border bg-[#0D1B2A]"></div>
 
-          <button id="contactSubmit"
-            class="btn-primary w-full py-4 rounded-lg text-sm font-bold flex items-center justify-center gap-2 mt-4"
-            type="submit">
-            Ejecutar Solicitud
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
-            </svg>
+          <button id="contactSubmit" class="btn-solid w-full py-5 text-sm uppercase mt-4" type="submit">
+            Autorizar Implementación
           </button>
         </form>
       </div>
+
     </div>
   </section>
 
-  <!-- Footer - Minimalist -->
-  <footer class="py-12 border-t border-white/5 bg-[#04080D]/90 relative z-10 px-6">
-    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-      <div class="text-base font-bold tracking-tight text-white/80">
+  <!-- Footer -->
+  <footer class="py-12 border-t border-white/10 bg-[#0D1B2A] px-6">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+      <div class="text-lg font-bold tracking-tight text-white eyebrow"
+        style="font-size: 1rem; letter-spacing: 0.1em; color: white;">
         SUMMIT<span class="text-brand-orange">AI</span>
       </div>
-      <div class="flex gap-8 text-xs font-semibold text-white/40 tracking-wider">
-        <a class="hover:text-white transition-colors duration-200" href="#servicios">SERVICIOS</a>
-        <a class="hover:text-white transition-colors duration-200" href="https://www.instagram.com/summit.ai.tech/"
-          target="_blank">INSTAGRAM</a>
-        <a class="hover:text-white transition-colors duration-200" href="#contacto">CONTACTO</a>
+
+      <div
+        class="flex flex-col sm:flex-row gap-6 md:gap-12 text-xs font-semibold text-brand-gray tracking-wider uppercase">
+        <a class="hover:text-white transition-colors" href="#servicios">Infraestructura</a>
+        <a class="hover:text-white transition-colors" href="https://www.instagram.com/summit.ai.tech/"
+          target="_blank">Instagram</a>
+        <a class="hover:text-white transition-colors" href="#contacto">Protocolos</a>
       </div>
-      <div class="text-xs text-white/30 font-medium tracking-wide">
-        © 2024-2026 Summit AI.
+
+      <div class="text-xs text-brand-gray font-medium tracking-wide">
+        VER 1.0.4. © 2026 SUMMIT AI.<br />TODOS LOS DERECHOS RESERVADOS.
       </div>
     </div>
   </footer>
@@ -440,7 +480,7 @@
   <!-- Scripts -->
   <script src="app.js"></script>
   <script>
-    // Additional simple UI logic
+    // Navbar Scroll Logic
     const nav = document.getElementById('main-nav');
     window.addEventListener('scroll', () => {
       if (window.scrollY > 50) {
@@ -450,12 +490,11 @@
       }
     });
 
-    // Simplify intersection observer for 300ms speedy reveals
+    // Sharp GSAP Reveals
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('active');
-          // Optional: unobserve to only animate once
           observer.unobserve(entry.target);
         }
       });
