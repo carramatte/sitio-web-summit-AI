@@ -11,53 +11,49 @@ document.body.style.overflow = 'hidden';
 // ==========================================
 const preloaderTL = gsap.timeline();
 
-// Ensure body is visible and scrollable if preloader is skipped or finishes
 const revealContent = () => {
     document.body.style.overflow = '';
-    // Hide preloader if it exists
-    const preloader = document.getElementById('preloader');
-    if (preloader) gsap.to(preloader, { yPercent: -100, duration: 1, ease: "power4.inOut" });
 };
 
 preloaderTL
-    .to({}, { duration: 0.25, onComplete: revealContent }) // Short delay to ensure DOM readiness
-    .fromTo('.hero-title-tesla', {
-        y: 40,
+    .to({}, { duration: 0.1, onComplete: revealContent })
+    .fromTo('#hero h1', {
+        y: 20,
         autoAlpha: 0
     }, {
         y: 0,
         autoAlpha: 1,
-        duration: 0.6,
-        ease: "power3.out"
+        duration: 0.3,
+        ease: "power2.out"
     })
-    .fromTo('.hero-subtitle-tesla', {
-        y: 20,
-        autoAlpha: 0
-    }, {
-        y: 0,
-        autoAlpha: 0.9,
-        duration: 0.5,
-        ease: "power3.out"
-    }, "-=0.4")
-    .fromTo('.btn-tesla', {
-        y: 20,
+    .fromTo('#hero p', {
+        y: 10,
         autoAlpha: 0
     }, {
         y: 0,
         autoAlpha: 1,
-        stagger: 0.075,
-        duration: 0.4,
-        ease: "power3.out"
-    }, "-=0.3")
+        duration: 0.3,
+        ease: "power2.out"
+    }, "-=0.15")
+    .fromTo('#hero a', {
+        y: 10,
+        autoAlpha: 0
+    }, {
+        y: 0,
+        autoAlpha: 1,
+        stagger: 0.05,
+        duration: 0.3,
+        ease: "power2.out"
+    }, "-=0.2")
     .fromTo('#main-nav', {
-        y: -30,
+        y: -10,
         autoAlpha: 0
     }, {
         y: 0,
         autoAlpha: 1,
-        duration: 0.5,
-        ease: "power3.out"
-    }, "-=0.5");
+        duration: 0.3,
+        ease: "power2.out"
+    }, "-=0.2");
 
 // ==========================================
 // 3. CYBERPUNK ENHANCEMENTS (Glitch, Particles, Reveal)
@@ -67,18 +63,7 @@ preloaderTL
 
 
 
-// Scroll Reveal Observer
-const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-        }
-    });
-}, { threshold: 0.15 });
-
-document.querySelectorAll('.reveal, section').forEach(el => {
-    if (!el.id || el.id !== 'hero-tesla') revealObserver.observe(el);
-});
+// Scroll Reveal Observer moved to index.html
 
 // Glass cards tilt effect
 const cards = document.querySelectorAll('.glass-card');
@@ -98,15 +83,15 @@ cards.forEach(card => {
         gsap.to(card, {
             rotateX: rotateX,
             rotateY: rotateY,
-            duration: 0.5,
+            duration: 0.3,
             ease: "power2.out",
             transformPerspective: 1000
         });
 
         // Add glare effect dynamically (Optional, simple highlight)
         gsap.to(card, {
-            boxShadow: `${-rotateY * 2}px ${rotateX * 2}px 20px rgba(0, 240, 255, 0.1)`,
-            duration: 0.5
+            boxShadow: `${-rotateY * 2}px ${rotateX * 2}px 20px rgba(255, 255, 255, 0.05)`,
+            duration: 0.3
         })
     });
 
@@ -115,7 +100,7 @@ cards.forEach(card => {
             rotateX: 0,
             rotateY: 0,
             boxShadow: "none",
-            duration: 0.5,
+            duration: 0.3,
             ease: "power2.out"
         });
     });
