@@ -1,10 +1,5 @@
-// GSAP Plugins Registration
-gsap.registerPlugin(ScrollTrigger);
-
 // Prevent scrolling while loading
 document.body.style.overflow = 'hidden';
-
-
 
 // ==========================================
 // 2. INTRO ANIMATION (Tesla Style)
@@ -56,11 +51,8 @@ preloaderTL
     }, "-=0.2");
 
 // ==========================================
-// 3. CYBERPUNK ENHANCEMENTS (Glitch, Particles, Reveal)
+// 3. ENHANCEMENTS
 // ==========================================
-
-
-
 
 
 // Scroll Reveal Observer moved to index.html
@@ -107,149 +99,8 @@ cards.forEach(card => {
 });
 
 
-// ==========================================
-// 4. THREE.JS BACKGROUND
-// ==========================================
-const initThreeJS = () => {
-    const canvas = document.getElementById('bg-canvas');
-    if (!canvas) return;
-    const scene = new THREE.Scene();
-    // Cyberpunk fog
-    scene.fog = new THREE.FogExp2(0x0D1B2A, 0.0015);
 
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 50;
 
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-    // Particles / Node Network
-    const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = 1500;
-
-    const posArray = new Float32Array(particlesCount * 3);
-    const colorArray = new Float32Array(particlesCount * 3);
-
-    const colorOptions = [
-        new THREE.Color('#C45E1A'), // Orange
-        new THREE.Color('#00F0FF'), // Cyan
-        new THREE.Color('#8B5CF6'), // Violet
-        new THREE.Color('#ffffff')  // White
-    ];
-
-    for (let i = 0; i < particlesCount * 3; i += 3) {
-        // Spread particles in a wide area (sphere roughly)
-        const r = 150 * Math.cbrt(Math.random());
-        const theta = Math.random() * 2 * Math.PI;
-        const phi = Math.acos(2 * Math.random() - 1);
-
-        posArray[i] = r * Math.sin(phi) * Math.cos(theta);
-        posArray[i + 1] = r * Math.sin(phi) * Math.sin(theta);
-        posArray[i + 2] = r * Math.cos(phi);
-
-        const color = colorOptions[Math.floor(Math.random() * colorOptions.length)];
-        colorArray[i] = color.r;
-        colorArray[i + 1] = color.g;
-        colorArray[i + 2] = color.b;
-    }
-
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
-
-    // Load a simple circle texture for particles if possible, else default square
-    // Using additive blending for "glow"
-    const particlesMaterial = new THREE.PointsMaterial({
-        size: 0.4,
-        vertexColors: true,
-        transparent: true,
-        opacity: 0.9,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false
-    });
-
-    const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-    scene.add(particlesMesh);
-
-    // Connection Lines - connecting the first 100 particles to create a small core network
-    const lineMaterial = new THREE.LineBasicMaterial({
-        color: 0x00F0FF,
-        transparent: true,
-        opacity: 0.15,
-        blending: THREE.AdditiveBlending
-    });
-
-    const lineGeometry = new THREE.BufferGeometry();
-    const lineIndices = [];
-    const limit = particlesCount;
-
-    for (let i = 0; i < 200; i++) {
-        for (let j = i + 1; j < 200; j++) {
-            const dx = posArray[i * 3] - posArray[j * 3];
-            const dy = posArray[i * 3 + 1] - posArray[j * 3 + 1];
-            const dz = posArray[i * 3 + 2] - posArray[j * 3 + 2];
-            const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-            if (dist < 25) {
-                lineIndices.push(i, j);
-            }
-        }
-    }
-    lineGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    lineGeometry.setIndex(lineIndices);
-    const lineMesh = new THREE.LineSegments(lineGeometry, lineMaterial);
-    scene.add(lineMesh);
-
-    // Mouse interaction variables
-    let mouseX = 0;
-    let mouseY = 0;
-
-    window.addEventListener('mousemove', (e) => {
-        // Normalized device coordinates
-        mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-        mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
-    });
-
-    // Animation Loop
-    const clock = new THREE.Clock();
-
-    const tick = () => {
-        const elapsedTime = clock.getElapsedTime();
-
-        // Rotate slowly
-        particlesMesh.rotation.y = elapsedTime * 0.05;
-        particlesMesh.rotation.x = elapsedTime * 0.02;
-        lineMesh.rotation.y = elapsedTime * 0.05;
-        lineMesh.rotation.x = elapsedTime * 0.02;
-
-        // Smooth Mouse movement interaction
-        const targetX = mouseX * 20;
-        const targetY = mouseY * 20;
-        const targetZ = camera.position.z;
-
-        // Parallax effect
-        camera.position.x += (targetX - camera.position.x) * 0.02;
-        camera.position.y += (targetY - camera.position.y) * 0.02;
-        camera.lookAt(scene.position);
-
-        // Subtle pulsing effect on particles
-        particlesMaterial.size = 0.4 + Math.sin(elapsedTime * 2) * 0.1;
-
-        renderer.render(scene, camera);
-        window.requestAnimationFrame(tick);
-    }
-
-    tick();
-
-    // Resize handler
-    window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-};
-
-initThreeJS();
 
 
 // ==========================================
